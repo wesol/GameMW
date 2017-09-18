@@ -1,15 +1,11 @@
 create database game;
-drop database game;
+#drop database game;
 use game;
 select database();
 show tables;
 
-SELECT pow(1,2);
-SELECT cos();
-select floor();
-
 CREATE TABLE weapons (
-	id_w INT AUTO_INCREMENT,
+	id_w INT,
     name_w VARCHAR(10),
     type VARCHAR(15),
     power tinyint,
@@ -17,24 +13,23 @@ CREATE TABLE weapons (
 	);
 
 
-
-
 CREATE TABLE characters (
-    id_c INT PRIMARY KEY AUTO_INCREMENT,
+    id_c INT AUTO_INCREMENT,
     id_w INT,
     name_c VARCHAR(10) not null,
     race SET('human', 'dwarf', 'orc', 'elf') not null,
     type SET('warrior', 'wizard', 'assasin') not null,
     strenght TINYINT DEFAULT 5,
     dexterity TINYINT DEFAULT 5,
-    intelligence TINYINT DEFAULT 5
+    intelligence TINYINT DEFAULT 5,
+	PRIMARY KEY (id_c)/*,
+	foreign key (id_w) references weapons(id_w)*/
 );
 
 describe characters;
-#
-drop table characters;
+#drop table characters;
 
-load data local infile 'D:/Rkfr/__projects/__game_files/characters.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/characters.csv' 
 	into table characters
 	FIELDS TERMINATED BY ';' 
    # escaped by ''
@@ -49,13 +44,13 @@ load data local infile 'D:/Rkfr/__projects/__game_files/characters.csv'
     ;
 #update characters set intelligence=deafult where intelligence is null;
 
-INSERT INTO CHARACTERS (id_w, name_c, race, type, strenght,intelligence, dexterity) VALUES (3, 'Gimli', 'dwarf', 'warrior', 15, 2, 5);
+/*INSERT INTO CHARACTERS (id_w, name_c, race, type, strenght,intelligence, dexterity) VALUES (3, 'Gimli', 'dwarf', 'warrior', 15, 2, 5);
 INSERT INTO CHARACTERS (id_w, name_C, race, type, strenght) VALUES (2, 'Boromir', 'dwarf',  'warrior', 15);
-INSERT INTO CHARACTERS (id_w, name_C, race, type, intelligence ) VALUES (15, 'Gur', 'orc',  'warrior', 16);
+INSERT INTO CHARACTERS (id_w, name_C, race, type, intelligence ) VALUES (15, 'Gur', 'orc',  'warrior', 16);*/
 
-describe characters;
 #UPDATE characters SET strenght = (DEFAULT(strenght)+1) where strenght is null;
 
+/*
 SELECT 
     *
 FROM
@@ -65,7 +60,7 @@ CREATE VIEW suma_nap AS
 SELECT (strenght+dexterity)*intelligence as napierdol
 FROM characters;
 
-drop view suma_napierdolu;
+drop view suma_nap;
 
 
-select * from suma_napierdolu;
+select * from suma_nap;
