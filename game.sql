@@ -1,152 +1,219 @@
 -- -----------------
--- Create database
+-- Database creating
 -- -----------------
 
-CREATE SCHEMA IF NOT EXISTS gameMW DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS gameMW;
 USE gameMW;
 
-create database game;
-#drop database game;
-use game;
-select database();
-show tables;
-
-CREATE TABLE weapons (
-	id_w INT,
-    name_w VARCHAR(10),
-    type VARCHAR(15),
-    power tinyint,
-     primary key(id_w)
-	);
+#drop database gameMW;
 
 -- -----------------
--- Create tabels
+-- Tables creatingW
 -- -----------------
 
 CREATE TABLE IF NOT EXISTS gameMW.weapons (
     id_we INT NOT NULL,
     name VARCHAR(15) NOT NULL,
-    power INT NULL DEFAULT 5,
-    defence INT NULL DEFAULT 5,
-    onehanded TINYINT NULL,
+    attack TINYINT UNSIGNED DEFAULT 5,
+    defence TINYINT UNSIGNED DEFAULT 5,
+    onehanded BOOLEAN DEFAULT 1,
     PRIMARY KEY (id_we)
 );
 
+#drop table gameMW.weapons;
 
-CREATE TABLE IF NOT EXISTS gameMW.armor (
+CREATE TABLE IF NOT EXISTS gameMW.armors (
     id_ar INT NOT NULL,
     name VARCHAR(15) NOT NULL,
-    power INT NULL DEFAULT 5,
-    defence INT NULL DEFAULT 5,
+    defence TINYINT UNSIGNED DEFAULT 0,
     PRIMARY KEY (id_ar)
 );
 
+#drop table gameMW.armors;
 
--- -----------------------------------------------------
--- Table `mydb`.`race`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`race` (
-  `id_ar` INT NOT NULL,
-  `name` VARCHAR(15) NOT NULL,
-  `power` INT NULL DEFAULT 5,
-  `defence` INT NULL DEFAULT 5,
-  PRIMARY KEY (`id_ar`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`charakters`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`charakters` (
-  `id_ch` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(15) NOT NULL,
-  `power` INT NULL DEFAULT 5,
-  `defence` INT NULL DEFAULT 5,
-  weapons_id INT NOT NULL,
-  armor_id INT NOT NULL,
-  race_id INT NOT NULL,
-  PRIMARY KEY (`id_ch`),
-  INDEX `fk_charakters_weapons_idx` (`weapons_id_we` ASC),
-  INDEX `fk_charakters_armor1_idx` (`armor_id_ar` ASC),
-  INDEX `fk_charakters_race1_idx` (`race_id_ar` ASC),
-  CONSTRAINT `fk_charakters_weapons`
-    FOREIGN KEY (`weapons_id_we`)
-    REFERENCES `mydb`.`weapons` (`id_we`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_charakters_armor1`
-    FOREIGN KEY (`armor_id_ar`)
-    REFERENCES `mydb`.`armor` (`id_ar`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_charakters_race1`
-    FOREIGN KEY (`race_id_ar`)
-    REFERENCES `mydb`.`race` (`id_ar`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-USE `mydb` ;
-
--- -----------------------------------------------------
--- View `mydb`.`view1`
--- -----------------------------------------------------
-USE `mydb`;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-CREATE TABLE characters (
-    id_c INT AUTO_INCREMENT,
-    id_w INT,
-    name_c VARCHAR(10) not null,
-    race SET('human', 'dwarf', 'orc', 'elf') not null,
-    type SET('warrior', 'wizard', 'assasin') not null,
-    strenght TINYINT DEFAULT 5,
-    dexterity TINYINT DEFAULT 5,
-    intelligence TINYINT DEFAULT 5,
-	PRIMARY KEY (id_c)/*,
-	foreign key (id_w) references weapons(id_w)*/
+CREATE TABLE IF NOT EXISTS gameMW.race (
+    id_ra INT NOT NULL,
+    name varchar(15) NOT NULL,
+    attack TINYINT UNSIGNED DEFAULT 0,
+    defence TINYINT UNSIGNED DEFAULT 0,
+    PRIMARY KEY (id_ra)
 );
 
-describe characters;
-#drop table characters;
+#drop table gameMW.race;
+
+CREATE TABLE IF NOT EXISTS gameMW.class (
+    id_cl INT NOT NULL,
+    name VARCHAR(15) NOT NULL,
+    attack TINYINT UNSIGNED DEFAULT 0,
+    defence TINYINT UNSIGNED DEFAULT 0,
+    PRIMARY KEY (id_cl)
+);
+
+#drop table gameMW.class;
+
+CREATE TABLE IF NOT EXISTS gameMW.characters (
+    id_ch INT AUTO_INCREMENT,
+    name VARCHAR(15) NOT NULL,
+    attack TINYINT UNSIGNED DEFAULT 5,
+    defence TINYINT NULL DEFAULT 5,
+    id_we_rh INT NOT NULL,
+    id_ar INT NOT NULL,
+    id_we_lh INT NOT NULL,
+    id_ra INT NOT NULL,
+    id_cl INT NOT NULL,
+    PRIMARY KEY (id_ch),
+    FOREIGN KEY (id_we_rh)
+        REFERENCES gameMW.weapons (id_we),
+    FOREIGN KEY (id_ar)
+        REFERENCES gameMW.armors (id_ar),
+    FOREIGN KEY (id_we_lh)
+        REFERENCES gameMW.weapons (id_we),
+    FOREIGN KEY (id_ra)
+        REFERENCES gameMW.race (id_ra),
+    FOREIGN KEY (id_cl)
+        REFERENCES gameMW.class (id_cl)
+);
+    
+#drop table gameMW.characters;
+
+-- -----------------
+-- Data loading
+-- -----------------
+
+load data local infile 'D:/Rkfr/__projects/GameMW/weapons.csv' 
+	into table gameMW.weapons
+	FIELDS TERMINATED BY ';' 
+  	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES
+    (id_we, name, attack, defence, onehanded)
+    SET 
+    attack = if(attack='', 0, attack),
+    defence = if(defence='', 0, defence),
+    onehanded = if(onehanded='', 1, onehanded)
+;
+
+load data local infile 'D:/Rkfr/__projects/GameMW/armors.csv' 
+	into table gameMW.armors
+	FIELDS TERMINATED BY ';' 
+  	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES
+    (id_ar, name, defence)
+    SET 
+    defence = if(defence='', 0, defence)
+;
+
+load data local infile 'D:/Rkfr/__projects/GameMW/race.csv' 
+	into table gameMW.race
+	FIELDS TERMINATED BY ';' 
+  	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES
+    (id_ra, name, attack, defence)
+    SET 
+    attack = if(attack='', 0, attack),
+    defence = if(defence='', 0, defence)
+;
+
+load data local infile 'D:/Rkfr/__projects/GameMW/class.csv' 
+	into table gameMW.class
+	FIELDS TERMINATED BY ';' 
+  	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES
+    (id_cl, name, attack, defence)
+    SET 
+    attack = if(attack='', 0, attack),
+    defence = if(defence='', 0, defence)
+;
+
 
 load data local infile 'D:/Rkfr/__projects/GameMW/characters.csv' 
 	into table characters
 	FIELDS TERMINATED BY ';' 
-   # escaped by ''
-	LINES TERMINATED BY '\n'
+  	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES
-    (id_w, name_c, race, type, strenght,dexterity,intelligence)
+    (name, attack, defence, id_we_rh, id_ar, id_we_lh, id_ra, id_cl)
     SET 
-    id_w = if(id_w='',1,id_w),
-    strenght = if(strenght='',5,strenght),
-    dexterity = if(dexterity='',5,dexterity),
-    intelligence = if(intelligence='',5,intelligence)
-    ;
-#update characters set intelligence=deafult where intelligence is null;
+    attack = if(attack='', 5, attack),
+    defence = if(defence='', 5, defence),
+    id_we_lh = if(id_we_lh='', null, id_we_lh),
+    id_we_lh = if(id_we_rh='', null, id_we_rh)
+;
 
-/*INSERT INTO CHARACTERS (id_w, name_c, race, type, strenght,intelligence, dexterity) VALUES (3, 'Gimli', 'dwarf', 'warrior', 15, 2, 5);
-INSERT INTO CHARACTERS (id_w, name_C, race, type, strenght) VALUES (2, 'Boromir', 'dwarf',  'warrior', 15);
-INSERT INTO CHARACTERS (id_w, name_C, race, type, intelligence ) VALUES (15, 'Gur', 'orc',  'warrior', 16);*/
+-- -----------------
+-- tables content showing
+-- -----------------
 
-#UPDATE characters SET strenght = (DEFAULT(strenght)+1) where strenght is null;
+select * from weapons;
 
-/*
-SELECT 
-    *
-FROM
-    characters;
-    
-CREATE VIEW suma_nap AS
-SELECT (strenght+dexterity)*intelligence as napierdol
-FROM characters;
+select * from armors;
 
-drop view suma_nap;
+select * from race;
+
+select * from class;
+
+select * from characters;
+
+-- -----------------
+-- Views creating
+-- -----------------
+
+### Summary view
+-- --------------
+
+CREATE VIEW summary_list AS
+    SELECT 
+        ch.name AS name,
+        we_rh.name AS right_hand,
+        we_lh.name AS left_hand,
+        ar.name AS armor,
+        ra.name AS race,
+        cl.name AS class,
+        (ch.attack + we_rh.attack + we_rh.attack + ra.attack + cl.attack) AS attack,
+        (ch.defence + we_rh.defence + ar.defence + we_rh.defence + ra.defence + cl.defence) AS defence
+    FROM
+        characters ch
+            JOIN
+        weapons we_rh ON ch.id_we_rh = we_rh.id_we
+            JOIN
+        armors ar ON ch.id_ar = ar.id_ar
+            JOIN
+        weapons we_lh ON ch.id_we_lh = we_lh.id_we
+            JOIN
+        race ra ON ch.id_ra = ra.id_ra
+            JOIN
+        class cl ON ch.id_cl = cl.id_cl;
+        
+#drop view summary_list;
+
+select * from summary_list;
+select * from summary_list order by attack;
+select * from summary_list order by defence;
+select * from summary_list order by race;
+select * from summary_list order by class;
+select * from summary_list order by armor;
+select * from summary_list order by right_hand;
+select * from summary_list su order by left_hand;
 
 
-select * from suma_nap;
->>>>>>> b4ecf53bbbd28fea3de304d56aa402c9a7993627
+### Players boxes
+-- --------------
+
+CREATE VIEW firstPlayer AS
+    SELECT 
+        *
+    FROM
+        summary_list su
+    WHERE
+        su.name = 'Lena'
+;
+
+CREATE VIEW secondPlayer AS
+    SELECT 
+        *
+    FROM
+        summary_list su
+    WHERE
+       su.name = 'Fooky'
+;
+
+
+
