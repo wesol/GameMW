@@ -56,11 +56,11 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
     name VARCHAR(15) NOT NULL,
     attack TINYINT UNSIGNED DEFAULT 5,
     defence TINYINT NULL DEFAULT 5,
-    id_we_rh INT NOT NULL,
-    id_ar INT NOT NULL,
-    id_we_lh INT NOT NULL,
-    id_ra INT NOT NULL,
-    id_cl INT NOT NULL,
+    id_we_rh INT,
+    id_ar INT,
+    id_we_lh INT,
+    id_ra INT,
+    id_cl INT,
     PRIMARY KEY (id_ch),
     FOREIGN KEY (id_we_rh)
         REFERENCES gameMW.weapons (id_we),
@@ -75,6 +75,21 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
 );
     
 #drop table gameMW.characters;
+
+CREATE TABLE IF NOT EXISTS gameMW.events (
+    id_ev INT AUTO_INCREMENT,
+    id_ra INT,
+    id_cl INT,
+    name VARCHAR(15) NOT NULL,
+    attack TINYINT,
+    defence TINYINT,
+    description VARCHAR(160),
+    PRIMARY KEY (id_ev),
+    FOREIGN KEY (id_ra)
+        REFERENCES gameMW.race (id_ra),
+    FOREIGN KEY (id_cl)
+        REFERENCES gameMW.class (id_cl)
+);
 
 -- -----------------
 -- Data loading
@@ -135,14 +150,25 @@ load data local infile 'D:/Rkfr/__projects/GameMW/characters.csv'
     attack = if(attack='', 5, attack),
     defence = if(defence='', 5, defence),
     id_we_lh = if(id_we_lh='', null, id_we_lh),
-    id_we_lh = if(id_we_rh='', null, id_we_rh)
+    id_we_rh = if(id_we_rh='', null, id_we_rh)
 ;
+
+load data local infile 'D:/Rkfr/__projects/GameMW/events.csv' 
+	into table characters
+	FIELDS TERMINATED BY ';' 
+  	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES
+    (id_ra, id_cl, name, attack, defence, description)
+    SET 
+    id_ra = if(id_ra='', null, id_we_lh),
+    id_cl = if(id_cl='', null, id_we_lh)
+;
+
 
 -- -----------------
 -- tables content showing
 -- -----------------
 
-select * from weapons;
 
 select * from armors;
 
