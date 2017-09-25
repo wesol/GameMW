@@ -76,26 +76,11 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
     
 #drop table gameMW.characters;
 
-CREATE TABLE IF NOT EXISTS gameMW.events (
-    id_ev INT AUTO_INCREMENT,
-    id_ra INT,
-    id_cl INT,
-    name VARCHAR(15) NOT NULL,
-    attack TINYINT,
-    defence TINYINT,
-    description VARCHAR(160),
-    PRIMARY KEY (id_ev),
-    FOREIGN KEY (id_ra)
-        REFERENCES gameMW.race (id_ra),
-    FOREIGN KEY (id_cl)
-        REFERENCES gameMW.class (id_cl)
-);
-
 -- -----------------
--- Data loading
+-- Data loadingGameMW/tables/
 -- -----------------
 
-load data local infile 'D:/Rkfr/__projects/GameMW/weapons.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/tables/weapons.csv' 
 	into table gameMW.weapons
 	FIELDS TERMINATED BY ';' 
   	LINES TERMINATED BY '\n'
@@ -107,7 +92,7 @@ load data local infile 'D:/Rkfr/__projects/GameMW/weapons.csv'
     onehanded = if(onehanded='', 1, onehanded)
 ;
 
-load data local infile 'D:/Rkfr/__projects/GameMW/armors.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/tables/armors.csv' 
 	into table gameMW.armors
 	FIELDS TERMINATED BY ';' 
   	LINES TERMINATED BY '\n'
@@ -117,7 +102,7 @@ load data local infile 'D:/Rkfr/__projects/GameMW/armors.csv'
     defence = if(defence='', 0, defence)
 ;
 
-load data local infile 'D:/Rkfr/__projects/GameMW/race.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/tables/race.csv' 
 	into table gameMW.race
 	FIELDS TERMINATED BY ';' 
   	LINES TERMINATED BY '\n'
@@ -128,7 +113,7 @@ load data local infile 'D:/Rkfr/__projects/GameMW/race.csv'
     defence = if(defence='', 0, defence)
 ;
 
-load data local infile 'D:/Rkfr/__projects/GameMW/class.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/tables/class.csv' 
 	into table gameMW.class
 	FIELDS TERMINATED BY ';' 
   	LINES TERMINATED BY '\n'
@@ -140,7 +125,7 @@ load data local infile 'D:/Rkfr/__projects/GameMW/class.csv'
 ;
 
 
-load data local infile 'D:/Rkfr/__projects/GameMW/characters.csv' 
+load data local infile 'D:/Rkfr/__projects/GameMW/tables/characters.csv' 
 	into table characters
 	FIELDS TERMINATED BY ';' 
   	LINES TERMINATED BY '\n'
@@ -151,17 +136,6 @@ load data local infile 'D:/Rkfr/__projects/GameMW/characters.csv'
     defence = if(defence='', 5, defence),
     id_we_lh = if(id_we_lh='', null, id_we_lh),
     id_we_rh = if(id_we_rh='', null, id_we_rh)
-;
-
-load data local infile 'D:/Rkfr/__projects/GameMW/events.csv' 
-	into table characters
-	FIELDS TERMINATED BY ';' 
-  	LINES TERMINATED BY '\n'
-	IGNORE 1 LINES
-    (id_ra, id_cl, name, attack, defence, description)
-    SET 
-    id_ra = if(id_ra='', null, id_we_lh),
-    id_cl = if(id_cl='', null, id_we_lh)
 ;
 
 
