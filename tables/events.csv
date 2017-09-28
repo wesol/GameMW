@@ -1,7 +1,6 @@
-id_ra;id_cl;name;attack;defence
-1;1;storm;15;5
-2;2;midnight;14;6
-3;3;dawn;12;8
-4;;flood;;
-;;winter;;
-;;none;;
+id_ra;id_cl;name;min_attack;max_attack;defence
+1;1;storm;10;15;5
+2;2;midnight;12;14;6
+3;3;dawn;10;12;8
+4;6;flood;10;12;-2
+5;6;ordinary day;;;
