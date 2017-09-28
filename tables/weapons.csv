@@ -1,13 +1,13 @@
-id_we;name;attack;defence;one-handed
-1;sword;6;0;1
-2;spear;8;0;1
-3;mace;6;0;1
-4;club;10;0;1
-5;axe;9;0;1
-6;longbow;12;0;0
-7;bow;8;7;0
-8;two-handed axe;14;1;0
-9;two-handed sword;13;0;0
-10;two-handed hummer;12;3;0
-11;shield;0;6;1
-12;buckler;0;7;1
+id_we;name;min_attack;max_attack;defence;one-handed
+1;sword;6;8;0;1
+2;spear;8;10;0;1
+3;mace;6;8;0;1
+4;club;10;13;0;1
+5;axe;9;12;0;1
+6;longbow;12;16;0;0
+7;bow;8;10;7;0
+8;two-handed axe;14;18;1;0
+9;two-handed sword;13;17;0;0
+10;two-handed hummer;12;16;3;0
+11;shield;0;1;6;1
+12;buckler;0;1;7;1
