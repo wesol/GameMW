@@ -230,6 +230,18 @@ CREATE VIEW summary_list AS
 select * from summary_list order by name desc;
 
 
+
+select * from summary_list order by name desc;
+	/*	select * from summary_list order by attack;
+	select * from summary_list order by defence;
+	select * from summary_list order by race;
+	select * from summary_list order by class;
+	select * from summary_list order by armor;
+	select * from summary_list order by right_hand;
+	select * from summary_list su order by left_hand;
+    */
+
+
 ### player1_view
 
 
@@ -259,6 +271,7 @@ CREATE VIEW gameMW.player1_view AS
         race ra ON ch.id_ra = ra.id_ra
             LEFT JOIN
         class cl ON ch.id_cl = cl.id_cl;
+
 
 
 
