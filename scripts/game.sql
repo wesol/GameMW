@@ -230,7 +230,6 @@ CREATE VIEW summary_list AS
 select * from summary_list order by name desc;
 
 
-
 select * from summary_list order by name desc;
 	/*	select * from summary_list order by attack;
 	select * from summary_list order by defence;
@@ -243,6 +242,7 @@ select * from summary_list order by name desc;
 
 
 ### player1_view
+
 
 
 CREATE VIEW gameMW.player1_view AS
