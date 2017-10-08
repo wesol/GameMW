@@ -229,8 +229,13 @@ CREATE VIEW summary_list AS
 #drop view summary_list;
 select * from summary_list order by name desc;
 
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 0b04e5c580373caad0dc79d37c221822734098fd
 select * from summary_list order by name desc;
 	/*	select * from summary_list order by attack;
 	select * from summary_list order by defence;
@@ -240,11 +245,19 @@ select * from summary_list order by name desc;
 	select * from summary_list order by right_hand;
 	select * from summary_list su order by left_hand;
     */
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc8e36eb1332bc52f45a59b4f85e258416d24ef2
+>>>>>>> 0b04e5c580373caad0dc79d37c221822734098fd
 
 ### player1_view
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 0b04e5c580373caad0dc79d37c221822734098fd
 CREATE VIEW gameMW.player1_view AS
     SELECT 
         ch.id_ch AS ID,
@@ -272,7 +285,12 @@ CREATE VIEW gameMW.player1_view AS
             LEFT JOIN
         class cl ON ch.id_cl = cl.id_cl;
 
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> dc8e36eb1332bc52f45a59b4f85e258416d24ef2
+>>>>>>> 0b04e5c580373caad0dc79d37c221822734098fd
 
 
 
