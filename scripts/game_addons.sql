@@ -43,17 +43,6 @@ select * from player1_view;
 -- --------------
 
 
- CREATE TABLE IF NOT EXISTS gameMW.players (
-    login VARCHAR(20),
-    password VARCHAR(30),
-    email VARCHAR(30),
-    first_log DATETIME,
-    last_log DATETIME,
-    rank INT default 0,
-    PRIMARY KEY (login)
-);
-
-#drop table gameMW.players;
 select * from gameMW.players;
 -- --------------------
 ### Wprowadzanie gracza
@@ -116,18 +105,6 @@ select * from player1_view;
 ### Players boxes
 -- --------------
 
-
- CREATE TABLE IF NOT EXISTS gameMW.players (
-    login VARCHAR(20),
-    password VARCHAR(30),
-    email VARCHAR(30),
-    first_log DATETIME,
-    last_log DATETIME,
-    rank INT default 0,
-    PRIMARY KEY (login)
-);
-
-#drop table gameMW.players;
 select * from gameMW.players;
 -- --------------------
 ### Wprowadzanie gracza

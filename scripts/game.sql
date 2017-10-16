@@ -2,7 +2,7 @@
 -- Database creating
 -- -----------------
 
-CREATE SCHEMA IF NOT EXISTS gameMW;
+CREATE DATABASE IF NOT EXISTS gameMW;
 USE gameMW;
 
 #drop database gameMW;
@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
     min_attack TINYINT UNSIGNED DEFAULT 5,
     max_attack TINYINT UNSIGNED DEFAULT 5,
     defence TINYINT NULL DEFAULT 5,
+    choice boolean default false,
     id_we_rh INT,
     id_ar INT,
     id_we_lh INT,
@@ -89,10 +90,11 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
  CREATE TABLE IF NOT EXISTS gameMW.players (
     login VARCHAR(20),
     password VARCHAR(30),
-    email VARCHAR(30),
+    email VARCHAR(30) UNIQUE,
     first_log DATETIME,
     last_log DATETIME,
-    rank INT default 0,
+    plays INT default 0,
+    wons INT default 0,
     PRIMARY KEY (login)
 );
 
@@ -224,11 +226,13 @@ CREATE VIEW summary_list AS
             LEFT JOIN
         race ra ON ch.id_ra = ra.id_ra
             LEFT JOIN
-        class cl ON ch.id_cl = cl.id_cl;
+        class cl ON ch.id_cl = cl.id_cl
+	where choice is not true;
         
 #drop view summary_list;
-select * from summary_list order by name desc;
 
+select * from summary_list order by name desc;
+select * from characters;
 
 select * from summary_list order by name desc;
 	/*	select * from summary_list order by attack;
@@ -241,36 +245,23 @@ select * from summary_list order by name desc;
     */
 
 
-### player1_view
 
+### All player_view
 
-
-CREATE VIEW gameMW.player1_view AS
+CREATE VIEW gameMW.all_players AS
     SELECT 
-        ch.id_ch AS ID,
-        ch.name AS name,
-        we_rh.name AS right_hand,
-        we_lh.name AS left_hand,
-        ar.name AS armor,
-        ra.name AS race,
-        cl.name AS class,
-        (ch.min_attack + we_rh.min_attack + we_rh.min_attack + ra.min_attack + cl.min_attack) AS min_attack,
-        (ch.max_attack + we_rh.max_attack + we_rh.max_attack + ra.max_attack + cl.max_attack) AS max_attack,
-        (ch.defence + we_rh.defence + ar.defence + we_rh.defence + ra.defence + cl.defence) AS defence
+        login, first_log, last_log, plays, wons
     FROM
-        player1_hand p1
-            LEFT JOIN
-        characters ch ON P1.id_ch = ch.id_ch
-            LEFT JOIN
-        weapons we_rh ON ch.id_we_rh = we_rh.id_we
-            LEFT JOIN
-        armors ar ON ch.id_ar = ar.id_ar
-            LEFT JOIN
-        weapons we_lh ON ch.id_we_lh = we_lh.id_we
-            LEFT JOIN
-        race ra ON ch.id_ra = ra.id_ra
-            LEFT JOIN
-        class cl ON ch.id_cl = cl.id_cl;
+        gameMW.players;
+    
+#drop view gameMW.all_players;
+
+
+
+
+
+
+
 
 
 
