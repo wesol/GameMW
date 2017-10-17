@@ -120,6 +120,12 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
 -- Data loadingGameMW/tables/
 -- -----------------
 
+insert into gameMW.players (login, password, email, first_log, last_log)
+	values  ('guest1', 'g', 'g@g.g', now(), now());
+    
+insert into gameMW.players (login, password, email, first_log, last_log)
+	values  ('guest2', 'g', 'g2@g.g', now(), now());
+
 load data local infile 'D:/Rkfr/__projects/GameMW/tables/weapons.csv' 
 	into table gameMW.weapons
 	FIELDS TERMINATED BY ';' 

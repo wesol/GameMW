@@ -1,5 +1,10 @@
 USE gameMW;
 
+
+select login, plays, wons from players;
+select * from all_players;
+select * from all_players where login != 'guest' or login != 'guest2';
+
 ### draw wchich players first
 -- --------------
 
