@@ -3,7 +3,18 @@ USE gameMW;
 
 select login, plays, wons from players;
 select * from all_players;
-select * from all_players where login != 'guest' or login != 'guest2';
+select * from all_players where login != 'guest' and login != 'guest2' ;
+
+
+SELECT login, CASE WHEN login='guest' THEN True ELSE False END AS bmi FROM gameMW.all_players;
+select email from all_players where email = 'g@g.g';
+
+insert into gameMW.players (login, password, email, first_log, last_log)
+	values  ('guest1', 'g', 'g@g.g', now(), now());
+
+
+
+select login from all_players where login = 'j';
 
 ### draw wchich players first
 -- --------------

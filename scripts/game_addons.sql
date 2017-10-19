@@ -32,18 +32,11 @@ Insert into gameMW.player1_hand(id_ch)
 Create trigger XXX after insert on gameMW.player1_hand for each row
 	delete from gameMW.characters where id_ch= 2 /*input id*/;
 
-
-
-select * from players;
-select * from player1_hand;
-select * from player1_view;
-
 -- --------------
 ### Players boxes
 -- --------------
 
 
-select * from gameMW.players;
 -- --------------------
 ### Wprowadzanie gracza
 -- --------------------
