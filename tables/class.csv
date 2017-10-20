@@ -1,4 +1,4 @@
 id_cl;name;min_attack;max_attack;defence
-1;warrior;5;7;5
-2;assasin;7;14;0
-3;bowman;3;12;4
+1;warrior;5;7;17
+2;assasin;7;14;2
+3;bowman;3;12;9

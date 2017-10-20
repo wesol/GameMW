@@ -1,5 +1,5 @@
 id_ra;name;min_attack;max_attack;defence
-1;human;5;5;5
-2;dwarf;4;6;6
-3;orc;3;6;4
-4;elf;2;8;3
+1;human;5;5;10
+2;dwarf;4;6;16
+3;orc;3;6;18
+4;elf;2;8;9

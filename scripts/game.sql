@@ -80,8 +80,6 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
 );
     
 #drop table gameMW.characters;
-
-
 -- --------------
 ### Players boxes
 -- --------------
@@ -101,20 +99,35 @@ CREATE TABLE IF NOT EXISTS gameMW.characters (
 #drop table gameMW.players;
 
  CREATE TABLE IF NOT EXISTS gameMW.player1_hand (
-    id_p1 INT AUTO_INCREMENT,
-    id_ch INT,
-    PRIMARY KEY (id_p1),
-    FOREIGN KEY (id_ch)
-        REFERENCES characters (id_ch)
+	id_ph1 int,
+    name VARCHAR(15),
+	right_hand varchar(15),
+	left_hand varchar(15),
+	armor varchar(15),
+	race varchar(15),
+	class varchar(15),
+	min_attack TINYINT,
+	max_attack TINYINT,
+	defence TINYINT
 );
 
+
  CREATE TABLE IF NOT EXISTS gameMW.player2_hand (
-    id_p2 INT AUTO_INCREMENT,
-    id_ch INT,
-    PRIMARY KEY (id_p2),
-    FOREIGN KEY (id_ch)
-        REFERENCES characters (id_ch)
+	id_ph2 int,
+    name VARCHAR(15),
+	right_hand varchar(15),
+	left_hand varchar(15),
+	armor varchar(15),
+	race varchar(15),
+	class varchar(15),
+	min_attack TINYINT,
+	max_attack TINYINT,
+	defence TINYINT
 );
+#drop table gameMW.player1_hand;
+
+
+
 
 -- -----------------
 -- Data loadingGameMW/tables/
@@ -190,19 +203,6 @@ load data local infile 'D:/Rkfr/__projects/GameMW/tables/characters.csv'
 
 
 -- -----------------
--- tables content showing
--- -----------------
-
-
-select * from armors;
-
-select * from race;
-
-select * from class;
-
-select * from characters;
-
--- -----------------
 -- Views creating
 -- -----------------
 
@@ -237,32 +237,31 @@ CREATE VIEW summary_list AS
         
 #drop view summary_list;
 
-select * from summary_list order by name desc;
-select * from characters;
+-- --------------------
+/*### Triggers
+-- --------------------
+Create trigger update_p1 after insert on gameMW.player1_hand for each row
+	update gameMW.characters set choice = true where name = new.name;
 
-select * from summary_list order by name desc;
-	/*	select * from summary_list order by attack;
-	select * from summary_list order by defence;
-	select * from summary_list order by race;
-	select * from summary_list order by class;
-	select * from summary_list order by armor;
-	select * from summary_list order by right_hand;
-	select * from summary_list su order by left_hand;
-    */
+Create trigger update_p2 after insert on gameMW.player2_hand for each row
+	update gameMW.characters set choice = true where name = new.name;
+
+*/
 
 
 
 ### All player_view
-
 CREATE VIEW gameMW.all_players AS
     SELECT 
         login, first_log, last_log, plays, wons
     FROM
         gameMW.players;
-    
 #drop view gameMW.all_players;
 
 
+
+#drop table player1_hand;
+#drop table player2_hand;
 
 
 
