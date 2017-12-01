@@ -12,17 +12,15 @@ class game_main:
                     password = Password.password.password
                     self.conn = pymysql.connect('localhost','root',password, 'gameMW')
                     self.cursor = self.conn.cursor()
-                    #input(' Witajcie w grze. Aby przejść do MENU wciśnij "Enter"')
+                    input(' Witajcie w grze. Aby przejść do MENU wciśnij "Enter"')
                     #self.menu()
-                    
-                    
                     # -------- Testowe
                     #self.registration()
                     #self.ranking()
                     #self.kards()
-                    #self.addhand()
+                    self.add_hand()
                     #self.show_hands()
-                    self.login(1)
+                    #self.login(1)
           
           def menu(self):
                     while True:
@@ -52,6 +50,8 @@ class game_main:
           def login (self, number):
                     self.number = number
                     print('Logowanie GRACZA NUMER '+ str(self.number))
+                    print('w budowie, przekierownie do losowania kart')
+                    add_hand()
                     
                     while True:
                               action = (input('\n'+(4*'='+'MENU LOGOWANIA'+4*'=').center(40)+'\n'+('GRACZ NUMER '+ str(self.number)).center(50)+'\n'+'"G" - GRAJ JAKO GOŚĆ'.center(50)+'\n'+'"L" - ZALOGUJ NORMALNIE'.center(50)+'\n').upper())
@@ -168,7 +168,7 @@ class game_main:
                     print ('Jesteś w panelu administracyjnym, możesz usuwać graczy z bazy danych lub ich banować')
                     
                     self.back()
-          def addhand(self): #loswoanie kart 
+          def add_hand(self): #loswoanie kart 
                     draw = randint(1,2)
                     input(('Rozpoczyna GRACZ NUMER %s, aby kontynuować wciśnij ENTER') % (draw))
                     i = 0
