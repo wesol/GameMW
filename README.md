@@ -1,2 +1,2 @@
 # GameMW
-Database and files - project at Reaktor bootcamp
+Database and files - project using connection with MySQL Database
